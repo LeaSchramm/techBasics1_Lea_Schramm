@@ -1,1 +1,69 @@
+import time
+def start_game():
+    print(" * Welcome to Otto's Späti * ")
+    time.sleep(2)
+
+# 1st User Input
+    name = input("Otto looks to you from behind the counter : 'Hey mate, whats your name?'(Type in your name please):  ")
+    print( f"Otto: 'Moin {name}! What do need, how can I help you?'")
+    time.sleep(1)
+
+    print("\n What do you wanna buy?")
+    print("1. Beer (2 Euro)")
+    print("2. Ice Cream  (1 Euro)")
+
+#2nd User Input and Branching Point
+    choice = input("Tipe in 1 or 2:")
+
+# Conditional Statement 1
+    if choice == "1":
+            print("\nOtto:'Ahh someone is thirsty, How many do you want?: '")
+
+            while True:
+                try:
+                    quanity = int(input("How many beer do you wanna buy ?: "))
+                    if 1<= quanity <=6 :
+                         break
+                    else:
+                        print("Otto: No sorry  mate, i just got 6 left, How man do you want? ")
+                except ValueError:
+                    print(" 'Huh?! Give me a number mate.' ")
+
+            print(f" You pay for your {quanity} beer. ")
+            time.sleep(2)
+
+# Conditional Stement 2 (Nested)
+            if quanity >=4:
+                print("Otto: 'Wow, you seem to have many thirsty friends, I'll give you an extra pack of gummybears!'")
+                gummybears = input("Do you want the extra package gummybears? (yes/no):")
+
+# Conditional Statement 3 (Nested)
+                if gummybears.lower() == "yes":
+                    print("Otto: 'Good Choice Mate, here you go!'")
+                else:
+                    print("Otto: 'Okay, then just pay the beer...' ")
+            else:
+                print("Otto: 'Have fun, see you next time!' ")
+
+# Conditional Statement 4
+    elif choice == "2":
+        print("\nOtto:' Ice Cream sounds great, The weather is beautiful.'")
+        time.sleep(1)
+        flavour = input(" 'Which flavour do you like?'(chocolate/vanille): ")
+
+# Conditional Statement 5
+        if flavour.lower() == "chocolate":
+            print(" Otto: 'Classic. Enjoy!'")
+        else:
+            print(f" Otto:'{flavour} is not available right now, I'll give you strawberry. Have a nice day !' ")
+    else:
+            print("\n Otto: 'If you don't wanna buy something, please step aside.'")
+
+    time.sleep(1.5)
+
+    print("\n GAME END. Thanks for visiting our Späti. ")
+
+if __name__ == "__main__":
+    start_game()
+
 
