@@ -1,4 +1,4 @@
- * Ottos Späti - a python text game *
+ * Ottos Späti - a python text game * 
 
 As an Hommage to all the Hamburger Kiosk Owners and the Culture that comes with them, 
 I created a littlen game to have fun while at the same time experiencing that culture and fulfilling the requirments of the text game. 
