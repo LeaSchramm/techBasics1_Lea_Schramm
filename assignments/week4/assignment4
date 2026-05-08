@@ -1,0 +1,65 @@
+import turtle
+import random
+
+# Setup
+screen = turtle.Screen()
+screen.bgcolor("#050505")  # Fast schwarz (Nacht)
+t = turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+# --- PARAMETER ---
+floors = 15  # Stockwerke
+windows = 8  # Fenster pro Etage
+size = 20  # Fenstergröße
+gap = 10  # Abstand zwischen Fenstern
+
+# ANFORDERUNG: Liste mit Lichtfarben (verschiedene Fenster-Stimmungen)
+light_colors = ["#FFFACD", "#FFD700", "#F0E68C", "#E0FFFF"]
+dark_window = "#1A1A1B"  # Ausgeschaltetes Fenster
+
+# Startposition (unten links)
+start_x = -((windows * (size + gap)) / 2)
+start_y = -250
+
+
+# Zeichnet ein einzelnes Fenster
+def draw_window(x, y, color):
+    t.penup()
+    t.goto(x, y)
+    t.pendown()
+    t.color(color)
+    t.begin_fill()
+    for _ in range(4):
+        t.forward(size)
+        t.left(90)
+    t.end_fill()
+
+
+# ANFORDERUNG: Verschachtelte Schleifen
+for f in range(floors):
+    for w in range(windows):
+
+        # Position für das aktuelle Fenster berechnen
+        curr_x = start_x + (w * (size + gap))
+        curr_y = start_y + (f * (size + gap + 5))  # +5 für Deckenabstand
+
+        # ANFORDERUNG: Conditional Statement
+        # Wahrscheinlichkeit, dass ein Licht brennt (z.B. 40%)
+        if random.random() > 0.6:
+            # ANFORDERUNG: Random + Liste zusammen
+            # Wähle eine zufällige warme Lichtfarbe aus der Liste
+            window_color = random.choice(light_colors)
+        else:
+            window_color = dark_window
+
+        draw_window(curr_x, curr_y, window_color)
+
+# Ein kleiner Bonus: Der "Boden" oder Schatten
+t.penup()
+t.goto(-500, start_y - 5)
+t.pendown()
+t.color("#111111")
+t.forward(1000)
+
+screen.exitonclick()
