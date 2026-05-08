@@ -1,65 +1,51 @@
 import turtle
 import random
 
-# Setup
+# Setup the screen 
 screen = turtle.Screen()
-screen.bgcolor("#050505")  # Fast schwarz (Nacht)
+screen.colormode(1.0)
+screen.bgcolor("#111111")
+screen.tracer(0)  # for the instant showing or better performance // with animation it would be (1)
+
 t = turtle.Turtle()
-t.speed(0)
 t.hideturtle()
+t.speed(0)
 
-# --- PARAMETER ---
-floors = 15  # Stockwerke
-windows = 8  # Fenster pro Etage
-size = 20  # Fenstergröße
-gap = 10  # Abstand zwischen Fenstern
-
-# ANFORDERUNG: Liste mit Lichtfarben (verschiedene Fenster-Stimmungen)
-light_colors = ["#FFFACD", "#FFD700", "#F0E68C", "#E0FFFF"]
-dark_window = "#1A1A1B"  # Ausgeschaltetes Fenster
-
-# Startposition (unten links)
-start_x = -((windows * (size + gap)) / 2)
-start_y = -250
+# my parameter
+rows, cols = 20, 15
+size, spacing = 15, 5
+start_x, start_y = -((cols * (size + spacing)) / 2), 200
 
 
-# Zeichnet ein einzelnes Fenster
-def draw_window(x, y, color):
+def draw_square(x, y, s, color):        # I defined the square as function // x,y is position; s is the size
     t.penup()
     t.goto(x, y)
     t.pendown()
     t.color(color)
     t.begin_fill()
     for _ in range(4):
-        t.forward(size)
-        t.left(90)
+        t.forward(s)
+        t.right(90)
     t.end_fill()
 
 
-# ANFORDERUNG: Verschachtelte Schleifen
-for f in range(floors):
-    for w in range(windows):
+for r in range(rows): #outer loop(y)
+    ratio = r / (rows - 1)
 
-        # Position für das aktuelle Fenster berechnen
-        curr_x = start_x + (w * (size + gap))
-        curr_y = start_y + (f * (size + gap + 5))  # +5 für Deckenabstand
+    for c in range(cols): #inner loop(x)
+        if random.random() > 0.1: # 10% chance to skip a square, which creates the gaps in the artwork
+            x = start_x + (c * (size + spacing)) + random.uniform(-2, 2)# the random position of the squares, for the shaky look
+            y = start_y - (r * (size + spacing)) + random.uniform(-2, 2)
 
-        # ANFORDERUNG: Conditional Statement
-        # Wahrscheinlichkeit, dass ein Licht brennt (z.B. 40%)
-        if random.random() > 0.6:
-            # ANFORDERUNG: Random + Liste zusammen
-            # Wähle eine zufällige warme Lichtfarbe aus der Liste
-            window_color = random.choice(light_colors)
-        else:
-            window_color = dark_window
+            # Define the color gradient: transitioning from Red to Blue
+            base_color = [1.0 - ratio, 0.1, ratio]
+            #added the random color variance to each square
+            final_color = [max(0, min(1, c + random.uniform(-0.1, 0.1))) for c in base_color]
 
-        draw_window(curr_x, curr_y, window_color)
+            draw_square(x, y, size, tuple(final_color))
 
-# Ein kleiner Bonus: Der "Boden" oder Schatten
-t.penup()
-t.goto(-500, start_y - 5)
-t.pendown()
-t.color("#111111")
-t.forward(1000)
-
+screen.update()  # show the picture now
 screen.exitonclick()
+
+# I love the style of the artwork and created it with the help of gemini to get the gradient and colors correct like
+# i imagined. The shown example was inspired me. 
