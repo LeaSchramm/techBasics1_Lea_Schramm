@@ -48,4 +48,4 @@ screen.update()  # show the picture now
 screen.exitonclick()
 
 # I love the style of the artwork and created it with the help of gemini to get the gradient and colors correct like
-# i imagined. The shown example was inspired me. 
+# i imagined. The example shown in the exercise inspired me. 
