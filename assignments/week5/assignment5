@@ -1,0 +1,92 @@
+import time
+
+BEER_PRICE = 2.0
+ICECREAM_PRICE = 1.0
+BEER_STOCK = 6
+
+def calculation_price(quantity):
+    final_price = quantity * float(BEER_PRICE)
+    return final_price
+
+
+
+
+def buying_beer(name):
+    # Conditional Statement 1
+    print(f"\nOtto:'Ahh {name} is thirsty, How many do you want?: '")
+
+    while True:
+        try:
+            quantity = int(input("How many beer do you wanna buy ?: "))
+            if 1<= quantity <= BEER_STOCK :
+                break
+            else:
+                            print(f"Otto: No sorry  mate, i just got {BEER_STOCK} left, How man do you want? ")
+        except ValueError:
+            print(" 'Huh?! Give me a number mate.' ")
+
+    price = calculation_price(quantity)
+    print(f" You pay for your {quantity} beer.")
+    print(f"That will cost you: {price}.")
+
+
+
+    time.sleep(2)
+
+    # Conditional Stement 2 (Nested)
+    if quantity >=4:
+        print("Otto: 'Wow, you seem to have many thirsty friends, I'll give you an extra pack of gummybears!'")
+        gummybears = input("Do you want the extra package gummybears? (yes/no):")
+
+    # Conditional Statement 3 (Nested)
+        if gummybears.lower() == "yes":
+            print("Otto: 'Good Choice Mate, here you go!'")
+        else:
+            print("Otto: 'Okay, then just pay the beer...' ")
+    else:
+        print("Otto: 'Have fun, see you next time!' ")
+
+def buying_icecream(name):
+
+    # Conditional Statement 4
+        print(f"\nOtto:' Ice Cream sounds great {name}, The weather is beautiful.'")
+        time.sleep(1)
+        flavour = input(f" 'Which flavour do you like {name}?'(chocolate/vanille): ").lower()
+
+    # Conditional Statement 5
+        if flavour == "chocolate":
+                print(" Otto: 'Classic. Enjoy!'")
+        else:
+                print(f" Otto:'{flavour} is not available right now, I'll give you strawberry. Have a nice day !' ")
+        time.sleep(1.5)
+
+        print("\n GAME END. Thanks for visiting our Späti. ")
+
+
+def start_game():
+    print(" * Welcome to Otto's Späti * ")
+    time.sleep(2)
+
+# 1st User Input
+    name = input("Otto looks to you from behind the counter : 'Hey mate, whats your name?'(Type in your name please):  ")
+    print( f"Otto: 'Moin {name}! What do need, how can I help you?'")
+    time.sleep(1)
+
+    print("\n What do you wanna buy?")
+    print("1. Beer (2 Euro)")
+    print("2. Ice Cream  (1 Euro)")
+
+#2nd User Input and Branching Point
+    choice =   input("Tipe in 1 or 2:")
+
+    if choice == "1":
+        buying_beer(name)
+    elif choice == "2":
+        buying_icecream(name)
+
+    else:
+        print("Otto: Dont waste my time!")
+
+if __name__ == "__main__":
+    start_game()
+
