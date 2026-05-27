@@ -1,21 +1,21 @@
-# Week 7 Assignment: Leaderboard and Record-Saving System
+# Week 7 Assignment: Leaderboard and Record-Saving System in the assassins creed game
 
 ## Project Overview
-This week, I added a persistent record-saving system and a leaderboard to the text-based Assassin's Creed game. The game now tracks how much time a player needs to complete the assassination mission. This data is saved externally so that players can compete for the fastest time across different game sessions.
+With this assginment, I added a leaderboard and a save system to the Assassin's Creed game. The game now tracks how many seconds a player takes to complete the mission and saves this data to an external file.
 
-## New Core Features
+## New Features and How They Work
 
-### 1. The Timer and Scoring System
-Instead of a traditional point score, this game uses "time spent in seconds" as the score. When the game loop begins, Python notes the exact start time using the `time` module. Once the player successfully executes the `assassinate` command with the correct equipment, the game captures the end time, calculates the total duration, and pairs it with the player's custom assassin name.
+### 1. The Timer and Score
+The game uses "time used in seconds" as the final score. The program records the exact time when the game starts. When the player successfully completes the mission, the program stops the timer, calculates the total seconds, and links it to the player's name.
 
-### 2. CSV File Management
-To store player records permanently, the game automatically reads and writes to an external file named `assassin_records.csv`. I chose the CSV format because it allows structured data to be saved row-by-row like a spreadsheet. When a game ends, the program loads the existing rows, appends the new player data, and sorts the entire list so that the fastest times always appear at the top of the leaderboard.
+### 2. CSV File Saving
+All player records are saved in a file called `assassin_records.csv`. When a game ends, the program opens this file, adds the new player's name, timestamp, and time, and then sorts the list. The fastest times (lowest seconds) are automatically placed at the top of the leaderboard.
 
-### 3. Exception Handling (Try/Except)
-To make the application robust and prevent crashes, I implemented defensive programming with `try/except` blocks. If the CSV file does not exist yet during a player's very first run, the program catches the `FileNotFoundError` and smoothly handles it by creating a brand-new file. Additional blocks safeguard the game against data conversion errors (`ValueError`) and file permission issues (`PermissionError`).
+### 3. Error Handling (Try/Except)
+I added `try/except` blocks to prevent the game from crashing. For example, if the game is played for the very first time, the CSV file does not exist yet. The code catches this `FileNotFoundError` and automatically creates a new file instead of closing with an error.
 
-### 4. Debug Mode Configuration
-As requested in the assignment instructions, a global variable called `DEBUG` is placed at the top of the script and set to `True`. When active, this flag alters the game flow by completely skipping the core text adventure loop. The tester only needs to input a name, and the program automatically generates a random placeholder time to immediately test the file-writing logic, sorting mechanism, and leaderboard visualization.
+### 4. Debug Mode
+There is a `DEBUG = True` flag at the top of the code. When it is set to `True`, the program skips the main game loop entirely. The tester only needs to type their name, and the game automatically creates a random placeholder time to instantly show how the saving system and leaderboard work.
 
-## Why I Designed the Code This Way
-Following the concepts taught in class, I used the `with open(...)` context manager to ensure that files are safely and automatically closed after operations, which prevents data loss. I used formatted f-strings like `{:15s}` to align the text columns, ensuring the terminal leaderboard looks clean and readable. Finally, separating the record-saving logic into its own independent function keeps the code modular and clean.
+## Code Design Choices
+I used the `with open(...)` statement because it automatically closes the file after reading or writing, which keeps the data safe. I also used formatted f-strings (like `{:15s}`) to align the text columns so the leaderboard prints as a clean, easy-to-read table in the terminal.
