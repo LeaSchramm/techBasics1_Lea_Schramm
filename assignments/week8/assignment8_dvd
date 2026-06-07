@@ -1,0 +1,90 @@
+import pygame
+import random
+
+# activate the pygame library .
+pygame.init()
+X = 1200
+Y = 800
+scrn = pygame.display.set_mode((X, Y))
+pygame.display.set_caption('Assignment 8: 3 Linear DVD Logos')
+
+# Das Bild einmal global laden, um es in der Klasse nutzen zu können
+DVD_IMAGE = pygame.image.load("dvd.png").convert_alpha()
+
+
+
+# Klasse für das Bild definieren
+
+class DVDLogo:
+    def __init__(self):
+        # Jedes Logo bekommt eine eigene Kopie des Bildes für die eigene Farbe
+        self.image = DVD_IMAGE.copy()
+        self.width = self.image.get_width()
+        self.height = self.image.get_height()
+
+        # Zufällige Startpositionen (random variables in initiation)
+        self.x = random.randint(0, X - self.width)
+        self.y = random.randint(0, Y - self.height)
+
+        #  Zufällige Startgeschwindigkeiten (X und Y Richtung getrennt)
+        self.speed_x = random.choice([-6, -4, 4, 6])
+        self.speed_y = random.choice([-6, -4, 4, 6])
+
+        #Zufällige Farbe für jedes Logo generieren (RGB-Werte)
+        self.color = (random.randint(50, 255), random.randint(50, 255), random.randint(50, 255))
+        self.tint_image(self.color)
+
+    # Funktion, um die Farbe des PNG-Bildes zu ändern
+    def tint_image(self, color):
+        color_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        color_surface.fill(color)
+        self.image.blit(color_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+
+    # Funktion für die rein lineare Bewegung und Wand-Kollision
+    def update(self):
+        # Reine lineare Bewegung (einfaches Plusrechnen auf die Koordinaten)
+        self.x += self.speed_x
+        self.y += self.speed_y
+
+        # Unregelmäßiges Abprallen an den Wänden (neuer Zufalls-Speed bei jedem Aufprall)
+        if self.x + self.width >= X:
+            self.speed_x = -random.randint(4, 6)
+        elif self.x <= 0:
+            self.speed_x = random.randint(4, 6)
+
+        if self.y + self.height >= Y:
+            self.speed_y = -random.randint(4, 6)
+        elif self.y <= 0:
+            self.speed_y = random.randint(4, 6)
+
+    # Funktion, die Logo auf den Bildschirm zeichnet
+    def draw(self, surface):
+        surface.blit(self.image, (self.x, self.y))
+
+
+# Exakt 3 Instanzen (Objekte) erstellen
+dvd_list = []
+for i in range(3):  # Die Schleife läuft jetzt genau 3 Mal
+    dvd_list.append(DVDLogo())
+
+clock = pygame.time.Clock()
+status = True
+
+# Game Loop
+while status:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            status = False
+
+    # Bildschirm weiß färben
+    scrn.fill((255, 255, 255))
+
+    # Durch die Liste gehen und alle 3 Logos updaten und zeichnen
+    for dvd in dvd_list:
+        dvd.update()
+        dvd.draw(scrn)
+
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
